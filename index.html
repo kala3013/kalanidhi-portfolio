@@ -97,11 +97,11 @@
       margin: 0;
     }
   </style>
-  <script type="module" crossorigin src="./assets/index-j8aq2Fii.js"></script>
+  <script type="module" crossorigin src="./assets/index-Bt8Bpxqf.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/vendor-Dvg167iZ.js">
   <link rel="modulepreload" crossorigin href="./assets/gsap-SFc2wnMY.js">
   <link rel="modulepreload" crossorigin href="./assets/three-CerK2D7O.js">
-  <link rel="stylesheet" crossorigin href="./assets/index-BtEu5zgS.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-D98ZaUOE.css">
 </head>
 
 <body>
@@ -376,6 +376,29 @@ const developer = {
       </div>
     </section>
 
+    <!-- =======================================================================
+         PORTFOLIO SECTIONS VISUAL REEL (HORIZONTAL ICON SCROLL)
+         ======================================================================= -->
+    <aside class="portfolio-sections-visual-deck" aria-label="Portfolio Sections Visual Navigation">
+      <div class="container">
+        <div class="visual-deck-header">
+          <div class="visual-deck-title-group">
+            <span class="live-pulse-dot"></span>
+            <span class="visual-deck-label">PORTFOLIO SECTIONS // VISUAL DIRECTORY</span>
+            <span class="visual-deck-hint">(Scroll left to right &bull; Click icon to jump)</span>
+          </div>
+          <div class="visual-deck-arrows">
+            <button type="button" class="deck-arrow-btn" id="sections-deck-prev" aria-label="Scroll left">❮</button>
+            <button type="button" class="deck-arrow-btn" id="sections-deck-next" aria-label="Scroll right">❯</button>
+          </div>
+        </div>
+
+        <div class="visual-deck-scroll-container" id="sections-visual-deck-scroll">
+          <!-- Populated dynamically via visualSectionDeck.js -->
+        </div>
+      </div>
+    </aside>
+
     <!-- -------------------------------------------------------------------
          ABOUT SECTION
          ------------------------------------------------------------------- -->
@@ -410,6 +433,7 @@ const developer = {
           </div>
 
           <!-- Core Competencies & Strengths Matrix -->
+          <div id="competencies-anchor" style="scroll-margin-top: 80px;"></div>
           <div class="competencies-matrix-wrapper">
             <div class="competencies-header-block">
               <span class="section-tag" style="margin-bottom:0.35rem;">Engineering Discipline</span>
