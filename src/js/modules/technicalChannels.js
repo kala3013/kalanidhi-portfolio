@@ -1,17 +1,13 @@
 /**
- * Technical Channels & Core Competencies Matrix
- * Fluid, tactile architectural explorer with zero auto-scrolling tickers or rigid ad boxes.
- * Features:
- *  - Interactive Channel Switcher with Live Counts
- *  - Architectural Channel Dossier with Engineering Metrics
- *  - Search & Keyword Filtering across 30+ Stacks
- *  - Tactile Tech Cards with Real-World Project Provenance
- *  - Core Competencies Matrix with Verifiable Evidence
+ * Technical Channels & Core Competencies Matrix (Visual-First Edition)
+ * Replaces dense vertical text blocks with left-to-right horizontal icon scroll reels.
+ * Details are progressively revealed upon click via a sleek cybernetic holographic inspector modal.
  */
 
 import { skillsData, technicalChannelsData, personalStrengths } from '../data/portfolioData.js';
 import { trackEvent } from '../utils/analytics.js';
 import { playTactileClick } from './audioEffects.js';
+import { setupHorizontalReel } from './visualSectionDeck.js';
 import gsap from 'gsap';
 
 // Real-world project connections mapping
@@ -45,7 +41,7 @@ export function initTechnicalChannels() {
   const channelsContainer = document.getElementById('technical-channels-wrapper');
   const competenciesContainer = document.getElementById('strengths-grid');
 
-  // 1. Render Core Competencies in About Section
+  // 1. Render Core Competencies Horizontal Reel
   renderCoreCompetencies(competenciesContainer);
 
   if (!channelsContainer) return;
@@ -58,7 +54,7 @@ export function initTechnicalChannels() {
 
   function renderChannelsHub() {
     channelsContainer.innerHTML = `
-      <!-- Channel Switcher Ribbon & Live Search Toolbar -->
+      <!-- Channel Switcher Ribbon & Search Toolbar -->
       <div class="tech-channels-toolbar">
         <div class="tech-channels-pills-scroll" role="tablist" aria-label="Technical Channels Navigation">
           ${technicalChannelsData.map((channel) => {
@@ -74,30 +70,37 @@ export function initTechnicalChannels() {
           }).join('')}
         </div>
 
-        <!-- Real-Time Search Bar -->
         <div class="tech-channels-search-bar">
           <div class="channel-search-box">
             <svg class="channel-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" id="tech-channel-search-input" class="channel-search-input" placeholder="Search 25+ technologies by name, superpower, or category..." value="${escapeHtml(searchQuery)}" aria-label="Search technologies">
+            <input type="text" id="tech-channel-search-input" class="channel-search-input" placeholder="Search 25+ technologies by name or keyword..." value="${escapeHtml(searchQuery)}" aria-label="Search technologies">
             <button type="button" id="tech-channel-search-clear" class="channel-search-clear" style="display: ${searchQuery ? 'block' : 'none'};" aria-label="Clear search">✕</button>
           </div>
-          <div class="channel-match-badge" id="channel-match-badge">
-            <!-- Dynamically populated count -->
-          </div>
+          <div class="channel-match-badge" id="channel-match-badge"></div>
         </div>
       </div>
 
-      <!-- Active Channel Architectural Dossier (Banner) -->
-      <div class="channel-dossier-card" id="channel-dossier-card">
-        <!-- Rendered via renderChannelDossier -->
+      <!-- Reel Controls & Visual Header -->
+      <div class="tech-reel-header-bar">
+        <div class="reel-header-title-col">
+          <div class="reel-hint-pill">
+            <span class="pulse-dot"></span>
+            <span>VISUAL TECH REEL // SCROLL LEFT TO RIGHT &bull; CLICK ICON FOR DETAILS</span>
+          </div>
+        </div>
+
+        <div class="tech-reel-arrows">
+          <button type="button" class="deck-arrow-btn" id="tech-reel-prev" aria-label="Scroll left">❮</button>
+          <button type="button" class="deck-arrow-btn" id="tech-reel-next" aria-label="Scroll right">❯</button>
+        </div>
       </div>
 
-      <!-- Interactive Tech Cards Bento Matrix -->
-      <div class="tech-cards-bento-grid" id="tech-cards-bento-grid">
-        <!-- Rendered via renderTechCards -->
+      <!-- Horizontal Visual Icon Scroll Deck (Left to Right) -->
+      <div class="tech-icons-horizontal-deck" id="tech-icons-horizontal-deck">
+        <!-- Rendered via renderTechIconTokens -->
       </div>
     `;
 
@@ -116,7 +119,7 @@ export function initTechnicalChannels() {
         btn.setAttribute('aria-selected', 'true');
 
         activeChannelId = nextId;
-        renderActiveChannel(true);
+        renderTechIconTokens(true);
         trackEvent('switch_tech_channel', { channel: nextId });
       });
     });
@@ -128,71 +131,30 @@ export function initTechnicalChannels() {
     searchInput?.addEventListener('input', (e) => {
       searchQuery = e.target.value.trim();
       if (searchClear) searchClear.style.display = searchQuery ? 'block' : 'none';
-      renderTechCards(false);
+      renderTechIconTokens(false);
     });
 
     searchClear?.addEventListener('click', () => {
       searchQuery = '';
       if (searchInput) searchInput.value = '';
       searchClear.style.display = 'none';
-      renderTechCards(false);
+      renderTechIconTokens(false);
       searchInput?.focus();
     });
 
-    renderActiveChannel(false);
+    // Attach Reel Navigation Arrows
+    const deck = document.getElementById('tech-icons-horizontal-deck');
+    const prevBtn = document.getElementById('tech-reel-prev');
+    const nextBtn = document.getElementById('tech-reel-next');
+    setupHorizontalReel(deck, prevBtn, nextBtn);
+
+    renderTechIconTokens(false);
   }
 
-  function renderActiveChannel(animate = false) {
-    renderChannelDossier(animate);
-    renderTechCards(animate);
-  }
-
-  function renderChannelDossier(animate = false) {
-    const dossierCard = document.getElementById('channel-dossier-card');
-    if (!dossierCard) return;
-
-    const channel = technicalChannelsData.find((c) => c.id === activeChannelId) || technicalChannelsData[0];
-    const skillsInChannel = getFilteredSkills(channel);
-
-    dossierCard.innerHTML = `
-      <div class="dossier-ambient-glow" style="background: radial-gradient(circle, ${channel.color}22 0%, transparent 70%);"></div>
-
-      <div class="dossier-header-row">
-        <div class="dossier-lead">
-          <span class="dossier-channel-icon">${channel.icon}</span>
-          <div>
-            <div class="dossier-channel-num">ARCHITECTURAL CHANNEL // ${channel.id.toUpperCase()}</div>
-            <h3 class="dossier-channel-title">${escapeHtml(channel.name)}</h3>
-          </div>
-        </div>
-
-        <div class="dossier-metric-badge" style="border-color: ${channel.color}55; color: ${channel.color}; background: ${channel.color}11;">
-          <span class="metric-pulse-dot" style="background: ${channel.color};"></span>
-          <span>${escapeHtml(channel.metric)}</span>
-        </div>
-      </div>
-
-      <p class="dossier-tagline">
-        "${escapeHtml(channel.tagline)}"
-      </p>
-
-      <p class="dossier-overview">
-        ${escapeHtml(channel.overview)}
-      </p>
-    `;
-
-    if (animate) {
-      gsap.fromTo(dossierCard,
-        { opacity: 0.7, y: 10 },
-        { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }
-      );
-    }
-  }
-
-  function renderTechCards(animate = false) {
-    const grid = document.getElementById('tech-cards-bento-grid');
+  function renderTechIconTokens(animate = false) {
+    const deck = document.getElementById('tech-icons-horizontal-deck');
     const badge = document.getElementById('channel-match-badge');
-    if (!grid) return;
+    if (!deck) return;
 
     const channel = technicalChannelsData.find((c) => c.id === activeChannelId) || technicalChannelsData[0];
     let skills = getFilteredSkills(channel);
@@ -212,114 +174,63 @@ export function initTechnicalChannels() {
     }
 
     if (skills.length === 0) {
-      grid.innerHTML = `
-        <div class="tech-empty-state">
-          <div style="font-size:2rem; margin-bottom:0.5rem;">🔍</div>
-          <div style="font-weight:700; color:var(--text-primary); margin-bottom:0.35rem;">No matching technologies found</div>
-          <div style="font-size:0.85rem; color:var(--text-muted);">Try a different keyword or reset the search query.</div>
+      deck.innerHTML = `
+        <div class="tech-empty-token-state">
+          <div style="font-size:2rem; margin-bottom:0.4rem;">🔍</div>
+          <div style="font-weight:700; color:var(--text-primary); font-size:0.95rem;">No matching technologies</div>
+          <div style="font-size:0.8rem; color:var(--text-muted);">Try a different keyword or reset search query.</div>
         </div>
       `;
       return;
     }
 
-    grid.innerHTML = skills.map((skill) => {
-      const projectProof = PROJECT_PROVENANCE_MAP[skill.name] || 'Applied across verified academic & capstone prototypes';
-      return `
-        <article class="tech-bento-card" data-skill-name="${escapeHtml(skill.name)}" style="--card-accent: ${skill.color};">
-          <div class="tech-bento-header">
-            <div class="tech-bento-chassis" style="box-shadow: 0 0 16px ${skill.color}25; border-color: ${skill.color}55;">
-              <div class="tech-bento-icon" style="color: ${skill.color};">
-                ${skill.iconSvg || '<span>✦</span>'}
-              </div>
-            </div>
-            <div class="tech-bento-title-col">
-              <h4 class="tech-bento-name">${escapeHtml(skill.name)}</h4>
-              <span class="tech-bento-cat">${escapeHtml(skill.category)}</span>
-            </div>
-            <span class="badge ${skill.badgeClass} tech-bento-level">${escapeHtml(skill.level)}</span>
+    deck.innerHTML = skills.map((skill) => `
+      <div class="tech-icon-token" data-skill-name="${escapeHtml(skill.name)}" role="button" tabindex="0" title="Click to view details for ${escapeHtml(skill.name)}" style="--token-accent: ${skill.color};">
+        <div class="token-glow-top" style="background: ${skill.color};"></div>
+
+        <div class="token-chassis" style="box-shadow: 0 0 20px ${skill.color}33; border-color: ${skill.color}66;">
+          <div class="token-svg-icon" style="color: ${skill.color};">
+            ${skill.iconSvg || '<span>✦</span>'}
           </div>
+        </div>
 
-          <div class="tech-bento-body">
-            <div class="tech-bento-superpower" style="color: ${skill.color}; background: ${skill.color}11; border-color: ${skill.color}33;">
-              ✦ ${escapeHtml(skill.superpower || 'Core Engineering Component')}
-            </div>
+        <h4 class="token-tech-name">${escapeHtml(skill.name)}</h4>
+        <span class="token-tech-cat">${escapeHtml(skill.category)}</span>
 
-            <p class="tech-bento-desc">${escapeHtml(skill.desc)}</p>
+        <span class="badge ${skill.badgeClass} token-tech-badge">${escapeHtml(skill.level)}</span>
 
-            <div class="tech-bento-provenance">
-              <span class="provenance-label">PROJECT PROVENANCE:</span>
-              <span class="provenance-text">${escapeHtml(projectProof)}</span>
-            </div>
-          </div>
+        <div class="token-inspect-hint">
+          <span>Inspect Details</span>
+          <span class="hint-arrow">▾</span>
+        </div>
+      </div>
+    `).join('');
 
-          <div class="tech-bento-footer">
-            <button type="button" class="btn-bento-filter" data-skill="${escapeHtml(skill.name)}" title="Filter verified projects using ${escapeHtml(skill.name)}">
-              <span>View Projects</span>
-              <span class="bento-arrow">▹</span>
-            </button>
-            <button type="button" class="btn-bento-term" data-skill="${escapeHtml(skill.name)}" title="Query in Developer Terminal">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-              <span>CLI</span>
-            </button>
-          </div>
-        </article>
-      `;
-    }).join('');
-
-    // Attach Click Handlers
-    grid.querySelectorAll('.btn-bento-filter').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
+    // Attach Click Handlers to open Holographic Tech Inspector Modal
+    deck.querySelectorAll('.tech-icon-token').forEach((token) => {
+      const clickHandler = () => {
         playTactileClick();
-        const skillName = btn.getAttribute('data-skill');
-        if (typeof window.filterProjectsBySkill === 'function') {
-          window.filterProjectsBySkill(skillName);
+        const skillName = token.getAttribute('data-skill-name');
+        const skill = skillsData.find((s) => s.name === skillName);
+        if (skill) {
+          openTechInspectorModal(skill);
+          trackEvent('inspect_tech_token', { skill: skillName });
         }
-      });
-    });
+      };
 
-    grid.querySelectorAll('.btn-bento-term').forEach((btn) => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        playTactileClick();
-        const skillName = btn.getAttribute('data-skill');
-        const termInput = document.getElementById('terminal-input');
-        const termWindow = document.querySelector('.terminal-window');
-        if (termInput) {
-          termInput.value = `skills ${skillName.toLowerCase()}`;
-          termWindow?.scrollIntoView({ behavior: 'smooth' });
-          termInput.focus();
-          termInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+      token.addEventListener('click', clickHandler);
+      token.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          clickHandler();
         }
-      });
-    });
-
-    // Clicking card directly filters projects
-    grid.querySelectorAll('.tech-bento-card').forEach((card) => {
-      card.addEventListener('click', () => {
-        playTactileClick();
-        const skillName = card.getAttribute('data-skill-name');
-        if (typeof window.filterProjectsBySkill === 'function') {
-          window.filterProjectsBySkill(skillName);
-        }
-      });
-    });
-
-    // Attach Spotlight Mouse Move
-    grid.querySelectorAll('.tech-bento-card').forEach((card) => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--spotlight-x', `${x}px`);
-        card.style.setProperty('--spotlight-y', `${y}px`);
       });
     });
 
     if (animate) {
-      gsap.fromTo(grid.children,
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.35, stagger: 0.03, ease: 'power2.out' }
+      gsap.fromTo(deck.children,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.3, stagger: 0.025, ease: 'power2.out' }
       );
     }
   }
@@ -335,54 +246,273 @@ export function initTechnicalChannels() {
 }
 
 /**
- * Render Core Competencies & Strengths Matrix with Verifiable Evidence
+ * Open Holographic Tech Inspector Modal upon Clicking an Icon
+ */
+function openTechInspectorModal(skill) {
+  let modal = document.getElementById('tech-inspector-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'tech-inspector-modal';
+    modal.className = 'tech-inspector-modal-backdrop';
+    document.body.appendChild(modal);
+  }
+
+  const projectProof = PROJECT_PROVENANCE_MAP[skill.name] || 'Applied across verified academic & capstone prototypes';
+
+  modal.innerHTML = `
+    <div class="tech-inspector-card" role="dialog" aria-modal="true" aria-label="Technology details for ${escapeHtml(skill.name)}" style="--modal-accent: ${skill.color};">
+      <button type="button" class="inspector-close-btn" id="tech-inspector-close" aria-label="Close details">✕</button>
+
+      <div class="inspector-ambient-glow" style="background: radial-gradient(circle, ${skill.color}28 0%, transparent 70%);"></div>
+
+      <div class="inspector-header">
+        <div class="inspector-chassis" style="box-shadow: 0 0 24px ${skill.color}44; border-color: ${skill.color}77;">
+          <div class="inspector-svg" style="color: ${skill.color};">
+            ${skill.iconSvg || '<span>✦</span>'}
+          </div>
+        </div>
+        <div class="inspector-title-col">
+          <div class="inspector-cat-tag">${escapeHtml(skill.adCategory || skill.category)}</div>
+          <h3 class="inspector-tech-title">${escapeHtml(skill.name)}</h3>
+          <span class="badge ${skill.badgeClass} inspector-level-badge">${escapeHtml(skill.level)}</span>
+        </div>
+      </div>
+
+      <div class="inspector-superpower-pill" style="color: ${skill.color}; background: ${skill.color}14; border-color: ${skill.color}44;">
+        ✦ ${escapeHtml(skill.superpower || 'Core Engineering Component')}
+      </div>
+
+      <p class="inspector-desc">${escapeHtml(skill.desc)}</p>
+
+      ${skill.adPitch ? `<p class="inspector-pitch">"${escapeHtml(skill.adPitch)}"</p>` : ''}
+
+      <div class="inspector-provenance-box">
+        <div class="provenance-header">
+          <span class="provenance-icon">🚀</span>
+          <span class="provenance-title">VERIFIED PROJECT PROVENANCE</span>
+        </div>
+        <div class="provenance-val">${escapeHtml(projectProof)}</div>
+      </div>
+
+      <div class="inspector-actions">
+        <button type="button" class="btn btn-primary btn-sm btn-inspector-filter" data-skill="${escapeHtml(skill.name)}">
+          <span>Filter Matching Projects (${escapeHtml(skill.name)})</span>
+          <span>↓</span>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm btn-inspector-cli" data-skill="${escapeHtml(skill.name)}">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          <span>CLI</span>
+        </button>
+      </div>
+    </div>
+  `;
+
+  modal.classList.add('active');
+  if (typeof window.lockScroll === 'function') window.lockScroll();
+
+  const close = () => {
+    modal.classList.remove('active');
+    if (typeof window.unlockScroll === 'function') window.unlockScroll();
+  };
+
+  document.getElementById('tech-inspector-close')?.addEventListener('click', close);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) close();
+  });
+
+  const escHandler = (e) => {
+    if (e.key === 'Escape') {
+      close();
+      window.removeEventListener('keydown', escHandler);
+    }
+  };
+  window.addEventListener('keydown', escHandler);
+
+  // Filter projects action
+  modal.querySelector('.btn-inspector-filter')?.addEventListener('click', () => {
+    close();
+    if (typeof window.filterProjectsBySkill === 'function') {
+      window.filterProjectsBySkill(skill.name);
+    }
+  });
+
+  // CLI terminal query action
+  modal.querySelector('.btn-inspector-cli')?.addEventListener('click', () => {
+    close();
+    const termInput = document.getElementById('terminal-input');
+    const termWindow = document.querySelector('.terminal-window');
+    if (termInput) {
+      termInput.value = `skills ${skill.name.toLowerCase()}`;
+      termWindow?.scrollIntoView({ behavior: 'smooth' });
+      termInput.focus();
+      termInput.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    }
+  });
+
+  // GSAP Pop-in animation
+  const card = modal.querySelector('.tech-inspector-card');
+  if (card) {
+    gsap.fromTo(card,
+      { scale: 0.92, opacity: 0, y: 15 },
+      { scale: 1, opacity: 1, y: 0, duration: 0.3, ease: 'back.out(1.5)' }
+    );
+  }
+}
+
+/**
+ * Render Core Competencies as Left-to-Right Horizontal Icon Reel with Click-to-Inspect
  */
 export function renderCoreCompetencies(container) {
   if (!container) return;
 
+  const parent = container.closest('.competencies-matrix-wrapper') || container.parentElement;
+
+  // Insert Horizontal Reel Header with Arrows if not already there
+  let reelControls = parent.querySelector('.competency-reel-controls');
+  if (!reelControls) {
+    reelControls = document.createElement('div');
+    reelControls.className = 'competency-reel-controls';
+    reelControls.innerHTML = `
+      <div class="reel-hint-pill">
+        <span class="pulse-dot"></span>
+        <span>CORE COMPETENCIES // SCROLL LEFT TO RIGHT &bull; CLICK ICON FOR PROOF</span>
+      </div>
+      <div class="competency-reel-arrows">
+        <button type="button" class="deck-arrow-btn" id="comp-reel-prev" aria-label="Scroll left">❮</button>
+        <button type="button" class="deck-arrow-btn" id="comp-reel-next" aria-label="Scroll right">❯</button>
+      </div>
+    `;
+    container.parentNode.insertBefore(reelControls, container);
+  }
+
+  container.className = 'competencies-horizontal-deck';
+
   container.innerHTML = personalStrengths.map((comp) => `
-    <article class="competency-bento-card" style="--comp-color: ${comp.color || '#38bdf8'};">
-      <div class="competency-top-line" style="background: ${comp.color || '#38bdf8'};"></div>
+    <div class="competency-icon-token" data-comp-id="${comp.id}" role="button" tabindex="0" title="Click to view verified evidence for ${escapeHtml(comp.name)}" style="--token-accent: ${comp.color || '#38bdf8'};">
+      <div class="token-glow-top" style="background: ${comp.color || '#38bdf8'};"></div>
 
-      <div class="competency-card-header">
-        <div class="competency-icon-chassis" style="box-shadow: 0 0 16px ${comp.color}25; border-color: ${comp.color}44;">
-          <span class="competency-icon">${comp.icon || '✦'}</span>
-        </div>
-        <div class="competency-title-col">
-          <span class="competency-discipline">${escapeHtml(comp.discipline || 'Engineering Discipline')}</span>
-          <h4 class="competency-name">${escapeHtml(comp.name)}</h4>
-        </div>
-        <span class="badge badge-outline competency-badge" style="border-color: ${comp.color}55; color: ${comp.color};">
-          ${escapeHtml(comp.badge || 'Verified')}
-        </span>
+      <div class="comp-token-header">
+        <span class="comp-token-discipline">${escapeHtml(comp.discipline || 'Discipline')}</span>
+        <span class="badge badge-outline comp-token-badge" style="border-color: ${comp.color}55; color: ${comp.color};">${escapeHtml(comp.badge || 'Verified')}</span>
       </div>
 
-      <p class="competency-desc">${escapeHtml(comp.desc)}</p>
-
-      <div class="competency-evidence-box">
-        <div class="evidence-header">
-          <span class="evidence-check">✓</span>
-          <span class="evidence-label">VERIFIED PROOF & CONTEXT:</span>
-        </div>
-        <p class="evidence-text">${escapeHtml(comp.evidence || 'Demonstrated across curriculum milestones and engineering deliverables.')}</p>
+      <div class="comp-token-chassis" style="box-shadow: 0 0 20px ${comp.color}33; border-color: ${comp.color}55;">
+        <span class="comp-token-emoji">${comp.icon || '✦'}</span>
       </div>
 
-      <div class="competency-tags-row">
-        ${(comp.tags || []).map((t) => `<span class="competency-tag-pill">${escapeHtml(t)}</span>`).join('')}
+      <h4 class="comp-token-title">${escapeHtml(comp.name)}</h4>
+      <p class="comp-token-short-desc">${escapeHtml(comp.desc)}</p>
+
+      <div class="token-inspect-hint">
+        <span>View Proof & Context</span>
+        <span class="hint-arrow">▾</span>
       </div>
-    </article>
+    </div>
   `).join('');
 
-  // Attach mouse spotlight
-  container.querySelectorAll('.competency-bento-card').forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--spotlight-x', `${x}px`);
-      card.style.setProperty('--spotlight-y', `${y}px`);
+  // Attach Click Handlers to open Holographic Competency Inspector Modal
+  container.querySelectorAll('.competency-icon-token').forEach((token) => {
+    const clickHandler = () => {
+      playTactileClick();
+      const compId = token.getAttribute('data-comp-id');
+      const comp = personalStrengths.find((c) => c.id === compId);
+      if (comp) {
+        openCompetencyInspectorModal(comp);
+        trackEvent('inspect_competency_token', { competency: comp.name });
+      }
+    };
+
+    token.addEventListener('click', clickHandler);
+    token.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        clickHandler();
+      }
     });
   });
+
+  // Attach Reel Navigation Arrows
+  const prevBtn = document.getElementById('comp-reel-prev');
+  const nextBtn = document.getElementById('comp-reel-next');
+  setupHorizontalReel(container, prevBtn, nextBtn);
+}
+
+/**
+ * Open Holographic Competency Inspector Modal upon Clicking an Icon
+ */
+function openCompetencyInspectorModal(comp) {
+  let modal = document.getElementById('competency-inspector-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'competency-inspector-modal';
+    modal.className = 'tech-inspector-modal-backdrop';
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div class="tech-inspector-card" role="dialog" aria-modal="true" aria-label="Competency details for ${escapeHtml(comp.name)}" style="--modal-accent: ${comp.color || '#38bdf8'};">
+      <button type="button" class="inspector-close-btn" id="comp-inspector-close" aria-label="Close details">✕</button>
+
+      <div class="inspector-ambient-glow" style="background: radial-gradient(circle, ${comp.color || '#38bdf8'}28 0%, transparent 70%);"></div>
+
+      <div class="inspector-header">
+        <div class="inspector-chassis" style="box-shadow: 0 0 24px ${comp.color || '#38bdf8'}44; border-color: ${comp.color || '#38bdf8'}77;">
+          <span style="font-size: 1.85rem;">${comp.icon || '✦'}</span>
+        </div>
+        <div class="inspector-title-col">
+          <div class="inspector-cat-tag">${escapeHtml(comp.discipline || 'Engineering Competency')}</div>
+          <h3 class="inspector-tech-title">${escapeHtml(comp.name)}</h3>
+          <span class="badge badge-outline" style="border-color: ${comp.color || '#38bdf8'}; color: ${comp.color || '#38bdf8'};">${escapeHtml(comp.badge || 'Verified')}</span>
+        </div>
+      </div>
+
+      <p class="inspector-desc" style="font-size:0.95rem; margin-top:0.75rem;">${escapeHtml(comp.desc)}</p>
+
+      <div class="inspector-provenance-box" style="margin-top:1.25rem;">
+        <div class="provenance-header">
+          <span class="provenance-icon">✓</span>
+          <span class="provenance-title" style="color:var(--accent-emerald);">VERIFIED PROOF &amp; REAL-WORLD CONTEXT</span>
+        </div>
+        <div class="provenance-val" style="color:var(--text-primary);">${escapeHtml(comp.evidence || 'Demonstrated through academic milestones and project delivery.')}</div>
+      </div>
+
+      <div class="competency-modal-tags">
+        <span style="font-family:var(--font-mono); font-size:0.68rem; color:var(--text-muted); display:block; margin-bottom:0.4rem;">SKILL APPLICATION VECTORS:</span>
+        <div style="display:flex; flex-wrap:wrap; gap:0.45rem;">
+          ${(comp.tags || []).map((t) => `<span class="badge badge-outline" style="font-size:0.72rem;">${escapeHtml(t)}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+  `;
+
+  modal.classList.add('active');
+  if (typeof window.lockScroll === 'function') window.lockScroll();
+
+  const close = () => {
+    modal.classList.remove('active');
+    if (typeof window.unlockScroll === 'function') window.unlockScroll();
+  };
+
+  document.getElementById('comp-inspector-close')?.addEventListener('click', close);
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) close();
+  });
+
+  const escHandler = (e) => {
+    if (e.key === 'Escape') {
+      close();
+      window.removeEventListener('keydown', escHandler);
+    }
+  };
+  window.addEventListener('keydown', escHandler);
+
+  const card = modal.querySelector('.tech-inspector-card');
+  if (card) {
+    gsap.fromTo(card,
+      { scale: 0.92, opacity: 0, y: 15 },
+      { scale: 1, opacity: 1, y: 0, duration: 0.3, ease: 'back.out(1.5)' }
+    );
+  }
 }
 
 function escapeHtml(str) {

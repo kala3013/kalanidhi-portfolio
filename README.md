@@ -765,6 +765,7 @@ kalanidhi-portfolio/
         │   ├── projects.js
         │   ├── architecture.js
         │   ├── techStackShowcase.js
+        │   ├── visualSectionDeck.js
         │   ├── technicalChannels.js
         │   ├── smoothScroll.js
         │   ├── audioEffects.js
@@ -844,16 +845,17 @@ The project was constructed in five systematic phases:
 - Built a secure client-side contact form with honeypot spam protection and instant feedback toasts (`contact.js`).
 - Added the classic Konami code easter egg (`↑ ↑ ↓ ↓ ← → ← → B A`) in `easterEgg.js`.
 
-#### Phase 6: 2026 Visual Effects & Technical Channels Architecture
-- **Interactive Technical Channels & Engineering Stack (`technicalChannels.js`)**:
-  - Engineered an architectural multi-channel console replacing generic rotating lists with a tactile, organic experience.
-  - **Channel Switcher Ribbon**: 8 domain channels (`All Channels`, `Client & Frontend`, `Backend & APIs`, `Persistence & Data`, `Autonomous AI`, `Cloud & DevOps`, `Core CS Bedrock`, `Workbench & Tools`) with live technology counts.
-  - **Channel Architectural Dossier**: Dynamically updates with architectural taglines, engineering overviews, and sub-16ms performance metrics.
-  - **Real-Time Interactive Search**: Instant keyword filtering across 25+ technologies with match counters.
-  - **Tactile Tech Bento Cards**: Glassmorphic cards with glowing SVG chassis, superpowers, real project provenance badges (`Applied in: Candidate Ranking System`, `Sangam Soft Solutions`), and 1-click project filter hooks.
-- **Core Engineering Competencies Matrix**:
-  - Elevated strengths into 6 high-impact bento cards: Algorithmic Problem Solving, Full-Stack Delivery, Agentic AI, DevOps/Cloud, Leadership, and Rapid Adaptability.
-  - Each card details concrete evidence from Anna University CSE, Sangam Soft Solutions internship, Placement Coordinator role, and Hackathon awards.
+#### Phase 6: 2026 Visual-First Experience & Horizontal Icon Reels
+- **Master Portfolio Sections Visual Navigator (`visualSectionDeck.js`)**:
+  - Placed directly under the hero: a left-to-right horizontal scroll reel representing all 12 portfolio sections as interactive visual icon tokens (`👤 About`, `🧠 Competencies`, `⚡ Tech Channels`, `🚀 Projects`, `🏗️ Architecture`, `💼 Experience`, etc.).
+  - Includes smooth scroll navigation arrows, touch swipe, and desktop drag-to-scroll.
+- **Horizontal Visual Tech Reel & Holographic Inspector (`technicalChannels.js`)**:
+  - Replaced clumsy vertical text paragraphs with a compact, left-to-right visual icon scroll deck.
+  - Technologies are shown as visual icon tokens with prominent glowing SVG logos, categories, and level badges.
+  - **Progressive Disclosure**: Clicking ANY icon opens the holographic inspector modal displaying its superpower, real-world project provenance, and 1-click project filter.
+- **Core Competencies Horizontal Icon Reel**:
+  - 6 iconic visual tokens scrolling left to right (`🧠 Algorithmic Logic`, `⚡ Full-Stack`, `🤖 Agentic AI`, `☁️ DevOps`, `🤝 Leadership`, `🚀 Adaptability`).
+  - Clicking any token opens the modal dossier showing concrete evidence from Anna University, Sangam Soft Solutions, and the Placement Coordinator role.
 - **Lenis Smooth Momentum Scrolling & Cinematic Scroll Features (`smoothScroll.js`)**:
   - Integrated 60/120fps inertia momentum scroll with GSAP ticker synchronization.
   - **Smart Autohiding Frosted Header**: Senses scroll velocity and direction; smoothly hides on rapid downscroll to maximize reading immersion and slides down with glassmorphism blur on upscroll.
