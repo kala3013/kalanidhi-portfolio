@@ -1182,13 +1182,155 @@ export const aboutNarrative = [
 ];
 
 export const personalStrengths = [
-  { name: "Problem Solving", icon: "🧩", desc: "Decomposing complex engineering challenges into clean, structured components." },
-  { name: "Quick Learning", icon: "⚡", desc: "Rapidly assimilating new frameworks, language paradigms, and developer tools." },
-  { name: "Teamwork", icon: "🤝", desc: "Collaborating transparently with fellow engineers using Git branches and clear communication." },
-  { name: "Leadership", icon: "🧭", desc: "Guiding classmates as Placement Coordinator and organizing technical initiatives." },
-  { name: "Communication", icon: "🎙️", desc: "Articulating ideas clearly through technical documentation and presentation skills." },
-  { name: "Adaptability", icon: "🔄", desc: "Thriving across changing priorities, hackathon constraints, and evolving tech stacks." },
-  { name: "Continuous Learning", icon: "📚", desc: "Proactively exploring AI agents, cloud containerization, and modern architecture." }
+  {
+    id: "algorithmic-problem-solving",
+    name: "Algorithmic Problem Solving",
+    discipline: "Analytical Engineering",
+    icon: "🧠",
+    badge: "Deterministic Logic",
+    color: "#38bdf8",
+    desc: "Decomposing ambiguous problem spaces into clean, modular components with optimal time and space complexity.",
+    evidence: "Engineered multi-criteria Candidate Ranking Algorithm with customizable weighting formulas; Anna University CSE distinction.",
+    tags: ["Data Structures", "Algorithmic Complexity", "Deterministic Logic", "Structured Decomposition"]
+  },
+  {
+    id: "full-stack-delivery",
+    name: "Full-Stack System Delivery",
+    discipline: "End-to-End Engineering",
+    icon: "⚡",
+    badge: "Production Proven",
+    color: "#10b981",
+    desc: "Bridging declarative client-side interfaces with robust asynchronous REST API microservices and secure persistence.",
+    evidence: "Verified industry internship at Sangam Soft Solutions contributing to full-stack applications; 6 verifiable project repositories.",
+    tags: ["React & Node.js", "REST APIs", "JWT Security", "Decoupled Architecture"]
+  },
+  {
+    id: "agentic-ai-exploration",
+    name: "Agentic AI & Swarm Orchestration",
+    discipline: "Emerging Intelligence",
+    icon: "🤖",
+    badge: "Autonomous Systems",
+    color: "#818cf8",
+    desc: "Designing autonomous multi-agent pipelines where specialized AI personas collaborate, inspect code, and execute sequential workflows.",
+    evidence: "Built AI Code Analyzer using CrewAI multi-agent swarms with custom role prompting and verifiable code vulnerability reporting.",
+    tags: ["CrewAI Multi-Agents", "Prompt Guardrails", "LLM Integration", "Automated Inspection"]
+  },
+  {
+    id: "devops-cloud-parity",
+    name: "DevOps & Cloud Environment Parity",
+    discipline: "Infrastructure & Reliability",
+    icon: "☁️",
+    badge: "Automated Workflows",
+    color: "#f59e0b",
+    desc: "Containerizing services for 100% environment parity and building automated continuous deployment pipelines.",
+    evidence: "Docker multi-stage builds, automated GitHub Actions CI/CD pipeline deploying live to production on push, Google Cloud Cybersecurity certified.",
+    tags: ["Docker OCI", "GitHub Actions CI/CD", "Google Cloud", "Zero-Drift Parity"]
+  },
+  {
+    id: "leadership-communication",
+    name: "Technical Leadership & Coordination",
+    discipline: "Collaborative Impact",
+    icon: "🤝",
+    badge: "Campus Placement Coordinator",
+    color: "#ec4899",
+    desc: "Aligning team efforts, communicating architectural trade-offs, and coordinating technical placement initiatives.",
+    evidence: "Appointed Student Placement Coordinator at Anna University Regional Campus, liaising with 40+ corporate recruiters and student cohorts.",
+    tags: ["Placement Coordination", "Technical Documentation", "Cross-Team Alignment", "NSS Volunteering"]
+  },
+  {
+    id: "rapid-adaptability",
+    name: "Rapid Adaptability & Fast Assimilation",
+    discipline: "Growth Mindset",
+    icon: "🚀",
+    badge: "93% Diploma Distinction",
+    color: "#06b6d4",
+    desc: "Rapidly mastering unfamiliar frameworks, tools, and paradigms under stringent hackathon constraints.",
+    evidence: "District Level Hackathon award; 93% distinction from Konghu Velalar; 8 verified certifications across Oracle, Google & freeCodeCamp.",
+    tags: ["Rapid Learning", "Hackathon Prototyping", "8 Verified Credentials", "Continuous Improvement"]
+  }
+];
+
+export const technicalChannelsData = [
+  {
+    id: "all",
+    name: "All Channels",
+    categoryKey: "All",
+    icon: "🌐",
+    tagline: "Comprehensive Full-Stack & Systems Inventory",
+    overview: "30+ verified technologies spanning modern reactive client frameworks, high-throughput backend services, relational ACID databases, autonomous multi-agent AI, and cloud containerization.",
+    metric: "30+ Technologies • 6 Production Projects",
+    color: "#38bdf8"
+  },
+  {
+    id: "frontend",
+    name: "Client & Frontend",
+    categoryKey: "Frontend",
+    icon: "⚛️",
+    tagline: "Reactive State Velocity & Semantic Component Architecture",
+    overview: "Crafting responsive, accessible user interfaces with declarative state hooks, sub-16ms virtual DOM diffing, and zero-layout-shift design tokens.",
+    metric: "60fps Performance • Accessible ARIA",
+    color: "#38bdf8"
+  },
+  {
+    id: "backend",
+    name: "Backend & APIs",
+    categoryKey: "Backend",
+    icon: "⚙️",
+    tagline: "High-Throughput Asynchronous Microservices & REST Endpoints",
+    overview: "Event-driven asynchronous server runtimes, structured middleware pipelines, cryptographic JWT token verification, and decoupled client-server contracts.",
+    metric: "Non-Blocking I/O • Stateless Auth",
+    color: "#22c55e"
+  },
+  {
+    id: "databases",
+    name: "Persistence & Data",
+    categoryKey: "Databases",
+    icon: "🗄️",
+    tagline: "Normalized Relational Schemas & Dynamic Document Stores",
+    overview: "3rd Normal Form schema normalization ensuring ACID transactional guarantees, coupled with dynamic indexed NoSQL document stores for rapid prototyping.",
+    metric: "3NF Normalization • ACID Guarantees",
+    color: "#0284c7"
+  },
+  {
+    id: "ai",
+    name: "Autonomous AI",
+    categoryKey: "AI",
+    icon: "🤖",
+    tagline: "Multi-Agent Swarm Orchestration & Prompt Engineering",
+    overview: "Collaborative agentic swarms powered by CrewAI and LLM APIs to inspect source code, delegate analysis tasks, and synthesize actionable engineering reports.",
+    metric: "Multi-Agent Swarms • Zero Hallucination",
+    color: "#a855f7"
+  },
+  {
+    id: "cloud",
+    name: "Cloud & DevOps",
+    categoryKey: "Cloud & DevOps",
+    icon: "☁️",
+    tagline: "Zero-Drift Containers & Continuous Integration Pipelines",
+    overview: "OCI container image packaging, automated GitHub Actions CI/CD workflows, Google Cloud security credentials, and resilient AWS foundations.",
+    metric: "100% Env Parity • Automated CI/CD",
+    color: "#f59e0b"
+  },
+  {
+    id: "core-cs",
+    name: "Core CS Bedrock",
+    categoryKey: "Core CS",
+    icon: "🧱",
+    tagline: "Algorithmic Complexity & Object-Oriented Rigor",
+    overview: "Academic and competitive fundamentals: data structures, algorithmic searching/sorting, clean polymorphism, and computational complexity discipline.",
+    metric: "Time/Space Optimal • Clean OOP",
+    color: "#ec4899"
+  },
+  {
+    id: "tools",
+    name: "Workbench & Tooling",
+    categoryKey: "Tools",
+    icon: "🛠️",
+    tagline: "Developer Productivity, Version Control & Collaboration",
+    overview: "Branching workflows, atomic commit strategies, terminal-first productivity, language server protocols, and interface wireframing.",
+    metric: "Atomic Git Workflows • High Velocity",
+    color: "#64748b"
+  }
 ];
 
 export const portfolioTechStackData = {

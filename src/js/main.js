@@ -13,7 +13,7 @@ import { personalInfo, recruiterHighlights, skillsData, internshipData, achievem
 import { initTheme } from './modules/theme.js';
 import { initNavigation } from './modules/navigation.js';
 import { initSmoothScroll } from './modules/smoothScroll.js';
-import { initSkillsAdBillboard } from './modules/skillsAdBillboard.js';
+import { initTechnicalChannels } from './modules/technicalChannels.js';
 import { initAudioEffects } from './modules/audioEffects.js';
 import { initCustomCursor } from './modules/customCursor.js';
 import { initMagneticButtons } from './modules/magnetic.js';
@@ -44,8 +44,7 @@ function safeRun(fn, label) {
 function initApp() {
   // 1. Ingest Content Immediately (Recruiter pills, skills, stats, experience)
   safeRun(renderRecruiterRibbon, 'renderRecruiterRibbon');
-  safeRun(initSkillsAdBillboard, 'initSkillsAdBillboard');
-  safeRun(renderStrengths, 'renderStrengths');
+  safeRun(initTechnicalChannels, 'initTechnicalChannels');
   safeRun(renderInternship, 'renderInternship');
   safeRun(renderCareerTimeline, 'renderCareerTimeline');
   safeRun(renderAchievements, 'renderAchievements');

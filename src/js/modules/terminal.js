@@ -90,19 +90,20 @@ function executeCommand(cmd, body) {
 
   const responseLine = document.createElement('div');
 
-  // Direct Ad / Skill Tuning Support
-  if (normalized.startsWith('skills ') || normalized.startsWith('ad ') || normalized.startsWith('tune ')) {
-    const query = normalized.replace(/^(skills|ad|tune)\s+/, '').trim();
+  // Direct Skill Query & Project Provenance Support
+  if (normalized.startsWith('skills ') || normalized.startsWith('tech ') || normalized.startsWith('find ')) {
+    const query = normalized.replace(/^(skills|tech|find)\s+/, '').trim();
     const matched = skillsData.find(s => s.name.toLowerCase().includes(query.toLowerCase()));
     if (matched) {
-      if (typeof window.tuneSkillAd === 'function') {
-        window.tuneSkillAd(matched.name);
+      if (typeof window.filterProjectsBySkill === 'function') {
+        window.filterProjectsBySkill(matched.name);
       }
       responseLine.innerHTML = `
-<span class="cmd-success">📺 Tuning Live Tech Ad Spotlight: [${matched.name}]</span>
+<span class="cmd-success">🔍 Inspected Technical Capability: [${matched.name}]</span>
 <span class="cmd-info">Superpower:</span> ${matched.superpower || matched.category}
-<span class="cmd-echo">Ad Tagline:</span> "${matched.adTagline || matched.desc}"
-<span style="color:var(--text-muted);">Loaded onto Live Billboard Stage!</span>
+<span class="cmd-echo">Category:</span> ${matched.category} | <span class="cmd-echo">Proficiency:</span> ${matched.level}
+<span style="color:var(--text-muted);">${matched.desc}</span>
+<span class="cmd-info">Filtering verified projects in portfolio...</span>
 `;
       entry.appendChild(responseLine);
       body.appendChild(entry);
@@ -117,7 +118,7 @@ function executeCommand(cmd, body) {
 <span class="cmd-info">Available Commands:</span>
   • <span class="cmd-echo">about</span>          - Brief overview and positioning
   • <span class="cmd-echo">skills</span>         - Technical stack & honest proficiency
-  • <span class="cmd-echo">skills [tech]</span>  - Stream live tech ad (e.g. 'skills react', 'ad docker')
+  • <span class="cmd-echo">skills [tech]</span>  - Inspect technology & filter projects (e.g. 'skills react', 'skills docker')
   • <span class="cmd-echo">projects</span>       - Key projects and repository links
   • <span class="cmd-echo">experience</span>     - Internship at Sangam Soft Solutions
   • <span class="cmd-echo">education</span>      - Anna University & Diploma credentials

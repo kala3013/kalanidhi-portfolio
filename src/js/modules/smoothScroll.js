@@ -224,7 +224,7 @@ function initScrollMinimap() {
   const sections = [
     { id: 'home', label: '01 Home' },
     { id: 'about', label: '02 About' },
-    { id: 'skills', label: '03 Skills Ads' },
+    { id: 'skills', label: '03 Tech Channels' },
     { id: 'projects', label: '04 Projects' },
     { id: 'architecture', label: '05 Architecture' },
     { id: 'portfolio-tech-stack', label: '06 Tech Stack' },
@@ -340,3 +340,4 @@ function initCardSpotlightGlow() {
     });
   });
 }
+

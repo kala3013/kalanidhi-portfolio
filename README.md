@@ -765,6 +765,9 @@ kalanidhi-portfolio/
         │   ├── projects.js
         │   ├── architecture.js
         │   ├── techStackShowcase.js
+        │   ├── technicalChannels.js
+        │   ├── smoothScroll.js
+        │   ├── audioEffects.js
         │   ├── aboutNarrative.js
         │   ├── certifications.js
         │   ├── resumeViewer.js
@@ -841,12 +844,16 @@ The project was constructed in five systematic phases:
 - Built a secure client-side contact form with honeypot spam protection and instant feedback toasts (`contact.js`).
 - Added the classic Konami code easter egg (`↑ ↑ ↓ ↓ ← → ← → B A`) in `easterEgg.js`.
 
-#### Phase 6: 2026 Visual Effects & Live Running Skills Ads Engine
-- **Live Skills Billboard & Commercials Spotlight (`skillsAdBillboard.js`)**:
-  - Plays technical skills dynamically like running digital billboard commercials one by one with glowing cyber chassis frames and neon border accents.
-  - Interactive broadcast HUD with spot index (`01 OF 20`), real-time timer progress bar, speed controls (`1x / 1.5x / 2x`), and pause-on-hover mechanics.
-  - **Dual Infinite Running Ads Marquee Tickers**: Left-to-right and right-to-left continuous streaming tickers (`⚡ AD #01: React.js • Reactive UI`, `🚀 AD #02: Docker • Zero-Drift`).
-  - Clicking any running marquee ad or grid card instantly tunes the billboard spotlight to that technology with spring transitions.
+#### Phase 6: 2026 Visual Effects & Technical Channels Architecture
+- **Interactive Technical Channels & Engineering Stack (`technicalChannels.js`)**:
+  - Engineered an architectural multi-channel console replacing generic rotating lists with a tactile, organic experience.
+  - **Channel Switcher Ribbon**: 8 domain channels (`All Channels`, `Client & Frontend`, `Backend & APIs`, `Persistence & Data`, `Autonomous AI`, `Cloud & DevOps`, `Core CS Bedrock`, `Workbench & Tools`) with live technology counts.
+  - **Channel Architectural Dossier**: Dynamically updates with architectural taglines, engineering overviews, and sub-16ms performance metrics.
+  - **Real-Time Interactive Search**: Instant keyword filtering across 25+ technologies with match counters.
+  - **Tactile Tech Bento Cards**: Glassmorphic cards with glowing SVG chassis, superpowers, real project provenance badges (`Applied in: Candidate Ranking System`, `Sangam Soft Solutions`), and 1-click project filter hooks.
+- **Core Engineering Competencies Matrix**:
+  - Elevated strengths into 6 high-impact bento cards: Algorithmic Problem Solving, Full-Stack Delivery, Agentic AI, DevOps/Cloud, Leadership, and Rapid Adaptability.
+  - Each card details concrete evidence from Anna University CSE, Sangam Soft Solutions internship, Placement Coordinator role, and Hackathon awards.
 - **Lenis Smooth Momentum Scrolling & Cinematic Scroll Features (`smoothScroll.js`)**:
   - Integrated 60/120fps inertia momentum scroll with GSAP ticker synchronization.
   - **Smart Autohiding Frosted Header**: Senses scroll velocity and direction; smoothly hides on rapid downscroll to maximize reading immersion and slides down with glassmorphism blur on upscroll.
