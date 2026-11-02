@@ -6,6 +6,8 @@
 import { personalInfo, educationData, internshipData, certificationsData, achievementsData, leadershipData } from '../data/portfolioData.js';
 import { showToast } from '../utils/toast.js';
 import { trackEvent } from '../utils/analytics.js';
+import { playSuccessTone, playTactileClick } from './audioEffects.js';
+import confetti from 'canvas-confetti';
 
 export function initResumeViewer() {
   const tabDocBtn = document.getElementById('resume-tab-doc');
@@ -20,6 +22,7 @@ export function initResumeViewer() {
 
   // 1. Tab Switching: Paper Document vs. ATS Structured View
   tabDocBtn?.addEventListener('click', () => {
+    playTactileClick();
     tabDocBtn.classList.add('active');
     tabDocBtn.setAttribute('aria-selected', 'true');
     tabAtsBtn?.classList.remove('active');
@@ -31,6 +34,7 @@ export function initResumeViewer() {
   });
 
   tabAtsBtn?.addEventListener('click', () => {
+    playTactileClick();
     tabAtsBtn.classList.add('active');
     tabAtsBtn.setAttribute('aria-selected', 'true');
     tabDocBtn?.classList.remove('active');
@@ -44,6 +48,7 @@ export function initResumeViewer() {
   // 2. Paper Sheet Theme Toggle (Paper Light vs. Dark Dev Mode)
   let isDarkPaper = false;
   themeToggleBtn?.addEventListener('click', () => {
+    playTactileClick();
     isDarkPaper = !isDarkPaper;
     if (paperSheet) {
       if (isDarkPaper) {
@@ -59,18 +64,38 @@ export function initResumeViewer() {
 
   // 3. Print / Save as PDF (triggers native browser print)
   printBtn?.addEventListener('click', () => {
+    playSuccessTone();
+    confetti({
+      particleCount: 50,
+      spread: 60,
+      origin: { y: 0.8 },
+      colors: ['#38bdf8', '#10b981', '#818cf8']
+    });
     trackEvent('resume_print_click');
     window.print();
   });
 
   // 4. Download PDF Action
   downloadBtn?.addEventListener('click', () => {
+    playSuccessTone();
+    confetti({
+      particleCount: 70,
+      spread: 70,
+      origin: { y: 0.8 },
+      colors: ['#38bdf8', '#10b981', '#818cf8', '#f59e0b']
+    });
     trackEvent('resume_download_click');
     showToast('Downloading Kalanidhi M C Resume (PDF)...', 'info');
   });
 
   // 5. Copy Formatted Plain-Text Resume to Clipboard
   copyTextBtn?.addEventListener('click', async () => {
+    playSuccessTone();
+    confetti({
+      particleCount: 40,
+      spread: 50,
+      origin: { y: 0.85 }
+    });
     const plainText = generatePlainTextResume();
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {

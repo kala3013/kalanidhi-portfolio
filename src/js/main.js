@@ -12,7 +12,9 @@ import '../css/dev-mode.css';
 import { personalInfo, recruiterHighlights, skillsData, internshipData, achievementsData, leadershipData, educationData, careerTimeline, personalStrengths } from './data/portfolioData.js';
 import { initTheme } from './modules/theme.js';
 import { initNavigation } from './modules/navigation.js';
-import { initScrollProgress } from './modules/scrollProgress.js';
+import { initSmoothScroll } from './modules/smoothScroll.js';
+import { initSkillsAdBillboard } from './modules/skillsAdBillboard.js';
+import { initAudioEffects } from './modules/audioEffects.js';
 import { initCustomCursor } from './modules/customCursor.js';
 import { initMagneticButtons } from './modules/magnetic.js';
 import { initHero3D } from './modules/hero3d.js';
@@ -42,7 +44,7 @@ function safeRun(fn, label) {
 function initApp() {
   // 1. Ingest Content Immediately (Recruiter pills, skills, stats, experience)
   safeRun(renderRecruiterRibbon, 'renderRecruiterRibbon');
-  safeRun(renderSkillsDashboard, 'renderSkillsDashboard');
+  safeRun(initSkillsAdBillboard, 'initSkillsAdBillboard');
   safeRun(renderStrengths, 'renderStrengths');
   safeRun(renderInternship, 'renderInternship');
   safeRun(renderCareerTimeline, 'renderCareerTimeline');
@@ -52,8 +54,9 @@ function initApp() {
 
   // 2. Interactive Navigation, Theme & Modals
   safeRun(initTheme, 'initTheme');
+  safeRun(initAudioEffects, 'initAudioEffects');
   safeRun(initNavigation, 'initNavigation');
-  safeRun(initScrollProgress, 'initScrollProgress');
+  safeRun(initSmoothScroll, 'initSmoothScroll');
   safeRun(initProjects, 'initProjects');
   safeRun(initArchitectureVisualizer, 'initArchitectureVisualizer');
   safeRun(initTechStackShowcase, 'initTechStackShowcase');

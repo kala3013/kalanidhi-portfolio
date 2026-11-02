@@ -6,6 +6,8 @@
 import { personalInfo } from '../data/portfolioData.js';
 import { trackEvent } from '../utils/analytics.js';
 import { showToast } from '../utils/toast.js';
+import { playSuccessTone, playTactileClick } from './audioEffects.js';
+import confetti from 'canvas-confetti';
 export { showToast };
 
 export function initContact() {
@@ -18,6 +20,13 @@ export function initContact() {
     copyBtn.addEventListener('click', () => {
       copyToClipboard(personalInfo.email, () => {
         showToast('Email address copied to clipboard!', toastContainer);
+        playSuccessTone();
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.8 },
+          colors: ['#38bdf8', '#10b981', '#818cf8', '#f59e0b']
+        });
         const originalText = copyBtn.innerHTML;
         copyBtn.innerHTML = `<span>✓</span> <span>Copied!</span>`;
         setTimeout(() => { copyBtn.innerHTML = originalText; }, 2500);
@@ -64,12 +73,19 @@ export function initContact() {
       const mailtoUrl = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`;
 
       showToast('Opening default mail client to deliver message...', toastContainer);
+      playSuccessTone();
+      confetti({
+        particleCount: 80,
+        spread: 75,
+        origin: { y: 0.7 },
+        colors: ['#38bdf8', '#10b981', '#818cf8', '#f59e0b', '#ffffff']
+      });
       trackEvent('contact_form_submit', { name, emailLength: email.length });
 
       setTimeout(() => {
         window.location.href = mailtoUrl;
         contactForm.reset();
-      }, 600);
+      }, 700);
     });
   }
 }

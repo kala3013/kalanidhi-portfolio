@@ -203,6 +203,16 @@ const developer = {
         </button>
 
         <!-- Theme Toggle -->
+        <!-- Futuristic Audio SFX Toggle -->
+        <button id="audio-sfx-toggle" class="btn-icon audio-sfx-toggle" aria-label="Toggle futuristic sound effects" aria-pressed="false" title="Toggle Futuristic Audio SFX">
+          <svg class="audio-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <span class="audio-label">SFX: OFF</span>
+        </button>
+
         <button id="theme-toggle-btn" class="btn-icon" aria-label="Toggle dark/light theme" title="Toggle theme">
           <span class="theme-icon">☀️</span>
         </button>
@@ -410,36 +420,76 @@ const developer = {
     <!-- -------------------------------------------------------------------
          SKILLS SECTION
          ------------------------------------------------------------------- -->
-    <section id="skills" class="section">
+    <section id="skills" class="section skills-broadcasting-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">02 // Capabilities</span>
-          <h2 class="section-title">Technical Skills &amp; Proficiency</h2>
+          <div class="section-badge-live">
+            <span class="live-pulse-dot"></span>
+            <span>LIVE BROADCAST // 2026 CAPABILITIES STREAM</span>
+          </div>
+          <h2 class="section-title">Live Skills Billboard &amp; Technology Reel</h2>
           <p class="section-desc">
-            Honest proficiency labels reflecting actual project experience. No arbitrary percentages.
+            Continuous commercial broadcast of core engineering capabilities, production tools, and architectural superpowers running like digital billboard advertisements.
           </p>
         </div>
 
-        <!-- Category Controls -->
-        <div class="skills-controls">
-          <button type="button" class="skill-category-btn active" data-category="All">All Technologies</button>
-          <button type="button" class="skill-category-btn" data-category="Programming">Programming</button>
-          <button type="button" class="skill-category-btn" data-category="Frontend">Frontend</button>
-          <button type="button" class="skill-category-btn" data-category="Backend">Backend</button>
-          <button type="button" class="skill-category-btn" data-category="Databases">Databases</button>
-          <button type="button" class="skill-category-btn" data-category="AI">AI</button>
-          <button type="button" class="skill-category-btn" data-category="Cloud & DevOps">Cloud &amp; DevOps</button>
-          <button type="button" class="skill-category-btn" data-category="Tools">Tools</button>
+        <!-- 1. The Featured Live Billboard Ad Spotlight Stage -->
+        <div id="skills-billboard-container" class="skills-billboard-container" aria-label="Featured Live Skill Commercial Spotlight">
+          <!-- Populated dynamically via skillsAdBillboard.js -->
         </div>
 
-        <!-- Interactive Skills Grid -->
-        <div id="skills-grid" class="skills-grid">
-          <!-- Rendered via JS -->
+        <!-- 2. Dual Infinite Running Ads Marquee Tickers -->
+        <div class="skills-marquees-wrapper" aria-label="Running Skill Advertisements Tickers">
+          <div class="marquee-label-row">
+            <div class="marquee-live-label">
+              <span class="live-pulse-dot"></span>
+              <span>LIVE RUNNING ADS STREAM // CONTINUOUS BROADCAST</span>
+            </div>
+            <span class="marquee-hint">Hover to pause &bull; Click any ad to tune spotlight</span>
+          </div>
+
+          <!-- Marquee Track 1 (Forward Flow) -->
+          <div class="skills-marquee-outer">
+            <div class="skills-marquee-track skills-marquee-forward" id="skills-marquee-track-1">
+              <!-- Populated dynamically via skillsAdBillboard.js -->
+            </div>
+          </div>
+
+          <!-- Marquee Track 2 (Reverse Flow) -->
+          <div class="skills-marquee-outer">
+            <div class="skills-marquee-track skills-marquee-reverse" id="skills-marquee-track-2">
+              <!-- Populated dynamically via skillsAdBillboard.js -->
+            </div>
+          </div>
         </div>
 
-        <div style="margin-top:2.5rem; text-align:center;">
-          <div style="font-family:var(--font-mono); font-size:0.825rem; color:var(--text-muted); display:inline-flex; align-items:center; gap:0.5rem; background:var(--bg-card); padding:0.6rem 1.25rem; border-radius:var(--radius-full); border:1px solid var(--border-subtle);">
-            <span style="color:var(--accent-cyan);">💡 Tip:</span> Click on any skill card above to filter projects that use that technology.
+        <!-- 3. All Technologies Channel Guide (Categorized Directory) -->
+        <div class="skills-channel-guide-section">
+          <div class="skills-channel-guide-header">
+            <div>
+              <span class="section-tag" style="margin-bottom:0.25rem;">Channel Directory</span>
+              <h3 class="skills-guide-title">Explore All Technology Channels</h3>
+            </div>
+            <p class="skills-guide-desc">
+              Filter by specialization or click <strong>Tune Ad</strong> on any card to stream that technology's commercial showcase.
+            </p>
+          </div>
+
+          <!-- Category Controls -->
+          <div class="skills-controls">
+            <button type="button" class="skill-category-btn active" data-category="All">All Technologies</button>
+            <button type="button" class="skill-category-btn" data-category="Programming">Programming</button>
+            <button type="button" class="skill-category-btn" data-category="Frontend">Frontend</button>
+            <button type="button" class="skill-category-btn" data-category="Backend">Backend</button>
+            <button type="button" class="skill-category-btn" data-category="Databases">Databases</button>
+            <button type="button" class="skill-category-btn" data-category="AI">AI</button>
+            <button type="button" class="skill-category-btn" data-category="Cloud &amp; DevOps">Cloud &amp; DevOps</button>
+            <button type="button" class="skill-category-btn" data-category="Tools">Tools</button>
+          </div>
+
+          <!-- Interactive Modern Skills Grid -->
+          <div id="skills-grid" class="skills-grid-modern">
+            <!-- Rendered via JS -->
           </div>
         </div>
       </div>
@@ -1138,5 +1188,7 @@ const developer = {
 
   <!-- Application Bootstrap -->
   <script type="module" src="/src/js/main.js"></script>
+  <!-- Floating Quick-Nav Scroll Minimap -->
+  <nav id="scroll-minimap" class="scroll-minimap" aria-label="Section quick navigation"></nav>
 </body>
 </html>

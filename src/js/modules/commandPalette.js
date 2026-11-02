@@ -19,6 +19,7 @@ const PALETTE_ITEMS = [
   { id: 'resume', title: 'Go to Resume & Download', category: 'Navigation', icon: '📄', shortcut: 'G D', action: () => scrollToSection('resume') },
   { id: 'contact', title: 'Go to Contact', category: 'Navigation', icon: '📬', shortcut: 'G C', action: () => scrollToSection('contact') },
   { id: 'theme', title: 'Toggle Dark / Light Theme', category: 'Action', icon: '🌓', shortcut: 'T', action: () => document.getElementById('theme-toggle-btn')?.click() },
+  { id: 'audio', title: 'Toggle Futuristic UI Sound Effects', category: 'Action', icon: '🔊', shortcut: 'M', action: () => document.getElementById('audio-sfx-toggle')?.click() },
   { id: 'devmode', title: 'Toggle Developer Mode', category: 'Action', icon: '⚡', shortcut: 'D', action: () => document.getElementById('dev-mode-toggle')?.click() },
   { id: 'github', title: 'Open GitHub Profile', category: 'External', icon: '🐙', shortcut: '', action: () => window.open('https://github.com/kala3013', '_blank', 'noopener noreferrer') },
   { id: 'linkedin', title: 'Open LinkedIn Profile', category: 'External', icon: '💼', shortcut: '', action: () => window.open('https://www.linkedin.com/in/kalanidhi-m-c-b568782a5/', '_blank', 'noopener noreferrer') },

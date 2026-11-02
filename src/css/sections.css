@@ -1966,3 +1966,685 @@
     max-height: 400px;
   }
 }
+
+/* ==========================================================================
+   LIVE SKILLS BILLBOARD & RUNNING ADS STREAM (2026 EDITION)
+   ========================================================================== */
+
+.skills-broadcasting-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.section-badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #f43f5e;
+  background: rgba(244, 63, 94, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  margin-bottom: 0.85rem;
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.2);
+}
+
+.live-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f43f5e;
+  box-shadow: 0 0 8px #f43f5e;
+  animation: liveDotPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes liveDotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* 1. Live Billboard Stage */
+.skills-billboard-container {
+  margin: 2rem 0 3.5rem;
+  perspective: 1200px;
+}
+
+.billboard-stage {
+  position: relative;
+  background: rgba(11, 15, 26, 0.85);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem 2rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.1);
+  overflow: hidden;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.billboard-stage:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 45px rgba(56, 189, 248, 0.2);
+}
+
+.billboard-ambient-glow {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 60%;
+  height: 140%;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+  filter: blur(40px);
+  transition: background 0.5s ease;
+}
+
+/* Top Broadcast HUD */
+.billboard-top-hud {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-bottom: 1rem;
+}
+
+.billboard-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--accent-cyan);
+}
+
+.billboard-spot-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+}
+
+.billboard-spot-count .spot-index {
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+/* Playback Controls */
+.billboard-controls-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.billboard-ctrl-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-medium);
+  color: var(--text-secondary);
+  border-radius: var(--radius-full);
+  padding: 0.35rem 0.65rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all var(--transition-fast);
+}
+
+.billboard-ctrl-btn:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--accent-cyan);
+}
+
+.billboard-ctrl-btn.btn-play-pause {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: var(--accent-cyan);
+}
+
+.billboard-ctrl-btn.btn-play-pause:hover {
+  background: var(--accent-cyan);
+  color: #040810;
+}
+
+.billboard-speed-btn {
+  color: var(--accent-emerald);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+/* Ad Progress Track */
+.billboard-progress-track {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.billboard-progress-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: var(--radius-full);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+  transition: width 0.05s linear;
+}
+
+/* Main Screen Content Area */
+.billboard-screen-body {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 2.25rem;
+  align-items: center;
+}
+
+.billboard-left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.billboard-icon-chassis {
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.9rem;
+  transition: transform var(--transition-normal);
+}
+
+.billboard-stage:hover .billboard-icon-chassis {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.billboard-icon-svg {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.billboard-icon-svg svg {
+  width: 100%;
+  height: 100%;
+}
+
+.billboard-category-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.billboard-level-badge {
+  font-size: 0.72rem;
+}
+
+/* Center Column */
+.billboard-title-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.billboard-tech-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.billboard-superpower-pill {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  border: 1px solid;
+  letter-spacing: 0.02em;
+}
+
+.billboard-ad-tagline {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0 0 0.65rem 0;
+  font-style: italic;
+}
+
+.billboard-ad-pitch {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0 0 1.25rem 0;
+}
+
+/* 3 Specs Cards */
+.billboard-specs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.85rem;
+}
+
+.billboard-spec-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  transition: all var(--transition-fast);
+}
+
+.billboard-spec-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.spec-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.2rem;
+}
+
+.spec-val {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+/* Action Bar */
+.billboard-action-bar {
+  position: relative;
+  z-index: 2;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.billboard-action-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.825rem;
+  color: var(--text-muted);
+}
+
+.hint-pulse {
+  animation: hintWiggle 2s infinite ease-in-out;
+}
+
+@keyframes hintWiggle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+.billboard-action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* 2. Dual Infinite Running Ads Marquee Tickers */
+.skills-marquees-wrapper {
+  margin: 3.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.marquee-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.marquee-live-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--accent-cyan);
+}
+
+.marquee-hint {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.skills-marquee-outer {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.skills-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: max-content;
+  will-change: transform;
+}
+
+.skills-marquee-forward {
+  animation: marqueeStreamForward 42s linear infinite;
+}
+
+.skills-marquee-reverse {
+  animation: marqueeStreamReverse 42s linear infinite;
+}
+
+.skills-marquee-outer:hover .skills-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeStreamForward {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-100% / 3)); }
+}
+
+@keyframes marqueeStreamReverse {
+  0% { transform: translateX(calc(-100% / 3)); }
+  100% { transform: translateX(0); }
+}
+
+.ad-ticker-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  padding: 0.55rem 0.95rem;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ad-ticker-card:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(56, 189, 248, 0.25);
+  background: rgba(20, 30, 55, 0.95);
+}
+
+.ad-ticker-badge {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.18rem 0.45rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+
+.ad-ticker-icon {
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-ticker-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ad-ticker-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.ad-ticker-power {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.ad-ticker-play-indicator {
+  font-size: 0.65rem;
+  color: var(--accent-cyan);
+  opacity: 0.6;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.ad-ticker-card:hover .ad-ticker-play-indicator {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+/* 3. All Technologies Channel Guide (Grid) */
+.skills-channel-guide-section {
+  margin-top: 3.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.skills-channel-guide-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.skills-guide-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.skills-guide-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  max-width: 500px;
+  margin: 0;
+}
+
+.skills-grid-modern {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.skill-card-modern {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.skill-card-modern::before {
+  content: '';
+  position: absolute;
+  top: var(--spotlight-y, -100px);
+  left: var(--spotlight-x, -100px);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, var(--skill-color, rgba(56, 189, 248, 0.15)) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.skill-card-modern:hover::before {
+  opacity: 0.25;
+}
+
+.skill-card-modern:hover {
+  border-color: var(--border-glow);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+.skill-modern-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.skill-modern-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.skill-modern-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.skill-modern-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.skill-modern-cat {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.skill-modern-badge {
+  margin-left: auto;
+  font-size: 0.7rem;
+}
+
+.skill-modern-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.skill-modern-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.btn-tune-ad {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: var(--accent-cyan);
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-tune-ad:hover {
+  background: var(--accent-cyan);
+  color: #040810;
+}
+
+.btn-filter-proj {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+  padding: 0.3rem 0.5rem;
+}
+
+.btn-filter-proj:hover {
+  color: var(--accent-cyan);
+}
+
+/* Responsive adjustments */
+@media (max-width: 840px) {
+  .billboard-screen-body {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 1.5rem;
+  }
+  .billboard-title-row {
+    justify-content: center;
+  }
+  .billboard-specs-grid {
+    grid-template-columns: 1fr;
+  }
+  .billboard-action-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+

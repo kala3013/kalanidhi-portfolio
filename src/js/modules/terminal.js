@@ -90,21 +90,54 @@ function executeCommand(cmd, body) {
 
   const responseLine = document.createElement('div');
 
+  // Direct Ad / Skill Tuning Support
+  if (normalized.startsWith('skills ') || normalized.startsWith('ad ') || normalized.startsWith('tune ')) {
+    const query = normalized.replace(/^(skills|ad|tune)\s+/, '').trim();
+    const matched = skillsData.find(s => s.name.toLowerCase().includes(query.toLowerCase()));
+    if (matched) {
+      if (typeof window.tuneSkillAd === 'function') {
+        window.tuneSkillAd(matched.name);
+      }
+      responseLine.innerHTML = `
+<span class="cmd-success">📺 Tuning Live Tech Ad Spotlight: [${matched.name}]</span>
+<span class="cmd-info">Superpower:</span> ${matched.superpower || matched.category}
+<span class="cmd-echo">Ad Tagline:</span> "${matched.adTagline || matched.desc}"
+<span style="color:var(--text-muted);">Loaded onto Live Billboard Stage!</span>
+`;
+      entry.appendChild(responseLine);
+      body.appendChild(entry);
+      body.scrollTop = body.scrollHeight;
+      return;
+    }
+  }
+
   switch (normalized) {
     case 'help':
       responseLine.innerHTML = `
 <span class="cmd-info">Available Commands:</span>
-  • <span class="cmd-echo">about</span>       - Brief overview and positioning
-  • <span class="cmd-echo">skills</span>      - Technical stack and proficiency
-  • <span class="cmd-echo">projects</span>    - Key projects and repository links
-  • <span class="cmd-echo">experience</span>  - Internship at Sangam Soft Solutions
-  • <span class="cmd-echo">education</span>   - Anna University & Diploma credentials
-  • <span class="cmd-echo">achievements</span>- Hackathons and innovation awards
-  • <span class="cmd-echo">contact</span>     - Email and networking profiles
-  • <span class="cmd-echo">cat resume</span>  - Quick summary and resume link
-  • <span class="cmd-echo">devmode</span>     - Toggle Developer Mode overlay
-  • <span class="cmd-echo">clear</span>       - Clear the terminal screen
+  • <span class="cmd-echo">about</span>          - Brief overview and positioning
+  • <span class="cmd-echo">skills</span>         - Technical stack & honest proficiency
+  • <span class="cmd-echo">skills [tech]</span>  - Stream live tech ad (e.g. 'skills react', 'ad docker')
+  • <span class="cmd-echo">projects</span>       - Key projects and repository links
+  • <span class="cmd-echo">experience</span>     - Internship at Sangam Soft Solutions
+  • <span class="cmd-echo">education</span>      - Anna University & Diploma credentials
+  • <span class="cmd-echo">achievements</span>   - Hackathons and innovation awards
+  • <span class="cmd-echo">contact</span>        - Email and networking profiles
+  • <span class="cmd-echo">cat resume</span>     - Quick summary and resume link
+  • <span class="cmd-echo">audio</span>          - Toggle futuristic sound effects
+  • <span class="cmd-echo">devmode</span>        - Toggle Developer Mode overlay
+  • <span class="cmd-echo">clear</span>          - Clear the terminal screen
 `;
+      break;
+
+    case 'audio':
+      const audioBtn = document.getElementById('audio-sfx-toggle');
+      if (audioBtn) {
+        audioBtn.click();
+        responseLine.innerHTML = `<span class="cmd-success">Futuristic UI sound effects toggled!</span>`;
+      } else {
+        responseLine.innerHTML = `<span class="cmd-info">Audio module loaded.</span>`;
+      }
       break;
 
     case 'whoami':
