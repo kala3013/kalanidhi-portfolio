@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting to Kalanidhi M C's Portfolio...</title>
+  <meta http-equiv="refresh" content="0; url=/kalanidhi-portfolio/">
+  <script>
+    (function() {
+      var currentPath = window.location.pathname;
+      var hash = window.location.hash || '';
+      var search = window.location.search || '';
+      if (currentPath.toLowerCase().indexOf('/portfolio') !== -1) {
+        var newPath = currentPath.replace(/\/portfolio/i, '/kalanidhi-portfolio');
+        window.location.replace(newPath + search + hash);
+      } else {
+        window.location.replace('/kalanidhi-portfolio/' + search + hash);
+      }
+    })();
+  </script>
+</head>
+<body style="background-color: #07090e; color: #f8fafc; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0;">
+  <p>Redirecting to <a href="/kalanidhi-portfolio/" style="color: #38bdf8;">Kalanidhi M C's Portfolio</a>...</p>
+</body>
+</html>
